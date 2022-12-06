@@ -63,5 +63,6 @@ in {
     fzf
     zsh
     tmux
+    stern
   ];
 }
