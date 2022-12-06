@@ -64,5 +64,8 @@ in {
     zsh
     tmux
     stern
+    diff-so-fancy
+    sqlite
+    kind
   ];
 }
