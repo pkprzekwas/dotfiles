@@ -67,5 +67,8 @@ in {
     diff-so-fancy
     sqlite
     kind
+    gnused
+    go
+    rustup
   ];
 }

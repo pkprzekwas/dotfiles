@@ -28,6 +28,7 @@ set ttyfast                 " Speed up scrolling in Vim
 call plug#begin("~/.vim/plugged")
  " Plugin Section
  Plug 'dracula/vim'
+ Plug 'arcticicestudio/nord-vim'
  Plug 'ryanoasis/vim-devicons'
  Plug 'SirVer/ultisnips'
  Plug 'honza/vim-snippets'
@@ -42,7 +43,7 @@ if (has("termguicolors"))
  set termguicolors
  endif
  syntax enable
- colorscheme dracula
+ colorscheme nord
  "colorscheme evening
 
 " open new split panes to right and below
@@ -86,3 +87,9 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+let mapleader=","
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
