@@ -70,5 +70,8 @@ in {
     gnused
     go
     rustup
+    libiconv
+    gcc
+    exercism
   ];
 }
