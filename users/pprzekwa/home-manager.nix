@@ -65,6 +65,16 @@ let sources = import ../../nix/sources.nix; in {
   # Programs
   #---------------------------------------------------------------------
 
+  programs.neovim = {
+    enable = true;
+    extraConfig = ''
+      set number relativenumber
+    '';
+
+    viAlias = true;
+    vimAlias = true;
+  };
+
   programs.gpg.enable = true;
 
   programs.bash = {
