@@ -1,6 +1,5 @@
 {
-  description = "Flake config";
-
+  description = "Based on: github.com/mitchellh/nixos-config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
@@ -11,34 +10,14 @@
     };
   };
 
-
-  outputs = { nixpkgs, home-manager, ... }:
-  let
-    user = "pprzekwa";
-    system = "aarch64-linux";
-
-    pkgs = import nixpkgs {
-      inherit system;
-
-      config = { allowUnfree = true; };
-    };
-
-    lib = nixpkgs.lib;
-
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+    mkVM = import ./lib/mkvm.nix;
+    overlays = [];
   in {
-    nixosConfigurations = {
-
-      utm = lib.nixosSystem {
-        inherit system;
-
-        modules = [
-          ./system/configuration.nix
-        ];
-
-      };
-
+    nixosConfigurations.vm-aarch64-utm = mkVM "vm-aarch64-utm" rec {
+      inherit overlays nixpkgs home-manager;
+      user = "pprzekwa";
+      system = "aarch64-linux";
     };
-
   };
-
 }
