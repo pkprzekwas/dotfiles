@@ -23,6 +23,7 @@ let sources = import ../../nix/sources.nix; in {
     pkgs.htop
     pkgs.jq
     pkgs.ripgrep
+    pkgs.rofi
     pkgs.tree
     pkgs.watch
     pkgs.zathura
@@ -47,10 +48,13 @@ let sources = import ../../nix/sources.nix; in {
 
   #home.file.".gdbinit".source = ./gdbinit;
   #home.file.".inputrc".source = ./inputrc;
+  home.file.".tmux.conf".source = ./tmux-conf;
+  home.file.".tmux.conf.local".source = ./tmux-conf-local;
 
   xdg.configFile."i3/config".text = builtins.readFile ./i3;
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
   xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
+  xdg.configFile."nvim/init.lua".text = builtins.readFile ./nvim-init;
 
   # tree-sitter parsers
   #xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
@@ -68,16 +72,6 @@ let sources = import ../../nix/sources.nix; in {
   programs.kitty = {
     enable = true;
     extraConfig = builtins.readFile ./kitty;
-  };
-
-  programs.neovim = {
-    enable = true;
-    extraConfig = ''
-      set number relativenumber
-    '';
-
-    viAlias = true;
-    vimAlias = true;
   };
 
   programs.gpg.enable = true;
@@ -128,34 +122,6 @@ let sources = import ../../nix/sources.nix; in {
 
   programs.tmux = {
     enable = true;
-    terminal = "xterm-256color";
-    shortcut = "l";
-    secureSocket = false;
-
-    extraConfig = ''
-      set -ga terminal-overrides ",*256col*:Tc"
-      set -g @dracula-show-battery false
-      set -g @dracula-show-network false
-      set -g @dracula-show-weather false
-      bind -n C-k send-keys "clear"\; send-keys "Enter"
-    '';
-  };
-
-  programs.alacritty = {
-    enable = true;
-
-    settings = {
-      env.TERM = "xterm-256color";
-
-      key_bindings = [
-        { key = "K"; mods = "Command"; chars = "ClearHistory"; }
-        { key = "V"; mods = "Command"; action = "Paste"; }
-        { key = "C"; mods = "Command"; action = "Copy"; }
-        { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
-        { key = "Equals"; mods = "Command"; action = "IncreaseFontSize"; }
-        { key = "Subtract"; mods = "Command"; action = "DecreaseFontSize"; }
-      ];
-    };
   };
 
   services.gpg-agent = {
@@ -176,4 +142,11 @@ let sources = import ../../nix/sources.nix; in {
     size = 128;
     x11.enable = true;
   };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
 }
