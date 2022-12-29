@@ -14,23 +14,31 @@ let sources = import ../../nix/sources.nix; in {
   # Packages I always want installed. Most packages I install using
   # per-project flakes sourced with direnv and nix-shell, so this is
   # not a huge list.
-  home.packages = [
-    pkgs.bat
-    pkgs.chromium
-    pkgs.fd
-    pkgs.firefox
-    pkgs.fzf
-    pkgs.htop
-    pkgs.jq
-    pkgs.ripgrep
-    pkgs.rofi
-    pkgs.tree
-    pkgs.watch
-    pkgs.zathura
+  home.packages = with pkgs; [
+    chromium
+    firefox
+    rofi
 
-    pkgs.go
-    pkgs.gopls
+    bat
+    fd
+    fzf
+    htop
+    jq
+    unzip
+    ripgrep
+    tree
+    watch
+    zathura
+    tldr
+    bottom
 
+    stern
+    kubectl
+    kind
+
+    go
+    rustup
+    nodejs
   ];
 
   #---------------------------------------------------------------------
