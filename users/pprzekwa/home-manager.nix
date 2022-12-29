@@ -5,7 +5,7 @@ let sources = import ../../nix/sources.nix; in {
   # to use the old state version.
   home.stateVersion = "18.09";
 
-  #xdg.enable = true;
+  xdg.enable = true;
 
   #---------------------------------------------------------------------
   # Packages
@@ -54,8 +54,7 @@ let sources = import ../../nix/sources.nix; in {
     MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
   };
 
-  #home.file.".gdbinit".source = ./gdbinit;
-  #home.file.".inputrc".source = ./inputrc;
+  home.file.".inputrc".source = ./inputrc;
   home.file.".tmux.conf".source = ./tmux-conf;
   home.file.".tmux.conf.local".source = ./tmux-conf-local;
 
@@ -63,15 +62,6 @@ let sources = import ../../nix/sources.nix; in {
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
   xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
   xdg.configFile."nvim/init.lua".text = builtins.readFile ./nvim-init;
-
-  # tree-sitter parsers
-  #xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
-  #xdg.configFile."nvim/queries/proto/folds.scm".source =
-  #  "${sources.tree-sitter-proto}/queries/folds.scm";
-  #xdg.configFile."nvim/queries/proto/highlights.scm".source =
-  #  "${sources.tree-sitter-proto}/queries/highlights.scm";
-  #xdg.configFile."nvim/queries/proto/textobjects.scm".source =
-  #  ./textobjects.scm;
 
   #---------------------------------------------------------------------
   # Programs
@@ -155,6 +145,35 @@ let sources = import ../../nix/sources.nix; in {
     enable = true;
     viAlias = true;
     vimAlias = true;
+  };
+
+  programs.zsh = {
+    enable = true;
+    
+    initExtra = builtins.readFile ./zshrc;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "thefuck" "kubectl" "kube-ps1" ];
+      theme = "refined";
+    };
+
+    shellAliases = {
+      ga = "git add";
+      gc = "git commit";
+      gco = "git checkout";
+      gcp = "git cherry-pick";
+      gdiff = "git diff";
+      gl = "git prettylog";
+      gp = "git push";
+      gs = "git status";
+      gt = "git tag";
+      k = "kubectl";
+      kgp = "kubectl get pods";
+      kgd = "kubectl get deployments";
+      ks = "kubectl -n kube-system";
+      kcd = "kubectl config set-context $(kubectl config current-context) --namespace ";
+    };
   };
 
 }

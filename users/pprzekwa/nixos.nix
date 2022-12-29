@@ -8,7 +8,7 @@
     isNormalUser = true;
     home = "/home/pprzekwa";
     extraGroups = [ "docker" "wheel" "networkmanager" ];
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
   };
 
   nixpkgs.overlays = import ../../lib/overlays.nix ++ [];
