@@ -59,16 +59,43 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  #services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  #services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.desktopManager.xfce.enable = true;
 
   # Configure keymap in X11
+  #services.xserver = {
+  #  layout = "us";
+  #  xkbVariant = "";
+  #};
+
+  # setup windowing environment
   services.xserver = {
+    enable = true;
     layout = "us";
-    xkbVariant = "";
+    dpi = 220;
+
+    desktopManager = {
+      xterm.enable = false;
+      wallpaper.mode = "fill";
+    };
+
+    displayManager = {
+      defaultSession = "none+i3";
+      lightdm.enable = true;
+
+      # AARCH64: For now, on Apple Silicon, we must manually set the
+      # display resolution. This is a known issue with VMware Fusion.
+      sessionCommands = ''
+        ${pkgs.xorg.xset}/bin/xset r rate 200 40
+      '';
+    };
+
+    windowManager = {
+      i3.enable = true;
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
