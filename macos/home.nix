@@ -49,7 +49,6 @@ in {
   home.packages = with pkgs; [
     bottom
     tree
-    neovim
     ripgrep
     git
     jq
@@ -75,6 +74,18 @@ in {
     rustup
     gcc
   ];
+
+  xdg.enable = true;
+  xdg.configFile."nvim/init.lua".text = builtins.readFile ./dotfiles/nvim;
+
+  home.sessionVariables = {
+    LANG = "en_US.UTF-8";
+    LC_CTYPE = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    EDITOR = "nvim";
+    PAGER = "less -FirSwX";
+    MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
+  };
 
   ### Programs
   programs.zsh = {
@@ -110,5 +121,10 @@ in {
     };
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+  };
 }
 
