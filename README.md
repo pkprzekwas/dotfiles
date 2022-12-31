@@ -3,11 +3,12 @@
 This repo contains NixOS configuration for my local developement VM.
 It has been tested on [UTM](https://github.com/utmapp/UTM) running on M2 Apple Silcon.
 
-### Known issues
-- clipboard is not working in i3wm
+### Known issues (vms)
+- i3wm - broken clipboard (host <-> guest)
 
 ### TODO
-- select partisions by label
-- zsh configuration
+- select partisions by label for vm setup
+- setup macos
+- share some configs between macos and vms (e.g. tmux) 
 
-Based on: github.com/mitchellh/nixos-config
+Inspired by: github.com/mitchellh/nixos-config
