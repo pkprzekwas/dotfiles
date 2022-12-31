@@ -66,6 +66,7 @@ in {
 
     vault
     libiconv
+    alacritty
 
     rustup
     gcc
@@ -73,6 +74,7 @@ in {
 
   xdg.enable = true;
   xdg.configFile."nvim/init.lua".text = builtins.readFile ./dotfiles/nvim;
+  xdg.configFile."alacritty/alacritty.yml".text = builtins.readFile ./dotfiles/alacritty;
 
   home.sessionVariables = {
     LANG = "en_US.UTF-8";
