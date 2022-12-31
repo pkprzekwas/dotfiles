@@ -47,18 +47,17 @@ in {
   home.stateVersion = "22.11";
 
   home.packages = with pkgs; [
-    bottom
-    tree
-    ripgrep
-    jq
-    tldr
-    tree
+    ripgrep # better grep
+    bat # better cat
+    exa # better ls
+    fzf # fuzzy search
+    tldr # simplified man
+    bottom # better sys metrics
     wget
-    bat
-    fzf
+    tree
+    jq
     gnused
     diff-so-fancy
-    exa
 
     k9s
     kubectl
