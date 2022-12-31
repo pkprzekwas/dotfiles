@@ -1,0 +1,59 @@
+# JavaScript
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+# End JavaScript
+
+# JWT
+decode_base64_url() {
+  local len=$((${#1} % 4))
+  local result="$1"
+  if [ $len -eq 2 ]; then result="$1"'=='
+  elif [ $len -eq 3 ]; then result="$1"'='
+  fi
+  echo "$result" | tr '_-' '/+' | base64 -D
+}
+
+decode_jwt() {
+  decode_base64_url $(echo -n $2 | cut -d "." -f $1) | jq .
+}
+
+alias jwth="decode_jwt 1"
+alias jwtp="decode_jwt 2"
+# end JWT
+
+# Kubernetes
+source <(kubectl completion zsh)
+complete -F __start_kubectl k
+
+## Secrets decode helper
+kdec() {
+  kubectl get secret $1 -o go-template='{{range $k,$v := .data}}{{"key: "}}{{$k}}{{"\nvalue: "}}{{$v|base64decode}}{{"\n\n"}}{{end}}'
+}
+
+## Switch between kubconfigs
+kc() {
+  local searchdir=${1:-~/.kube/config.d}
+  kubeconf=$(find ${searchdir} -type f | fzf)
+  export KUBECONFIG=$kubeconf
+}
+# End Kubernetes
+
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+
+# Installer issue link: https://github.com/NixOS/nix/issues/5406
+# Nix
+
+# Source: https://nixos.wiki/wiki/Fzf
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
+
+# Source nix confige after restart
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+

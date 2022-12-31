@@ -58,7 +58,6 @@ in {
     wget
     bat
     fzf
-    zsh
     tmux
     gnused
     diff-so-fancy
@@ -76,5 +75,40 @@ in {
     rustup
     gcc
   ];
+
+  ### Programs
+  programs.zsh = {
+    enable = true;
+
+    initExtra = builtins.readFile ./dotfiles/zshrc;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "kubectl" "kube-ps1" ];
+      theme = "refined";
+    };
+
+    shellAliases = {
+      ll = "exa -l";
+      lll = "gls -lahF --group-directories-first";
+
+      ga = "git add";
+      gc = "git commit";
+      gco = "git checkout";
+      gcp = "git cherry-pick";
+      gdiff = "git diff";
+      gl = "git prettylog";
+      gp = "git push";
+      gs = "git status";
+      gt = "git tag";
+
+      k = "kubectl";
+      kgp = "kubectl get pods";
+      kgd = "kubectl get deployments";
+      ks = "kubectl -n kube-system";
+      kcd = "kubectl config set-context $(kubectl config current-context) --namespace ";
+    };
+  };
+
 }
 
