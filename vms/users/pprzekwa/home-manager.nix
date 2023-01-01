@@ -31,6 +31,7 @@ let sources = import ../../nix/sources.nix; in {
     zathura
     tldr
     bottom
+    alacritty
 
     stern
     kubectl
@@ -54,14 +55,15 @@ let sources = import ../../nix/sources.nix; in {
     MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
   };
 
-  home.file.".inputrc".source = ./inputrc;
-  home.file.".tmux.conf".source = ./tmux-conf;
-  home.file.".tmux.conf.local".source = ./tmux-conf-local;
+  home.file.".inputrc".source = ./dotfiles/inputrc;
+  home.file.".tmux.conf".source = ./dotfiles/tmux-conf;
+  home.file.".tmux.conf.local".source = ./dotfiles/tmux-conf-local;
 
-  xdg.configFile."i3/config".text = builtins.readFile ./i3;
-  xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
-  xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
-  xdg.configFile."nvim/init.lua".text = builtins.readFile ./nvim-init;
+  xdg.configFile."i3/config".text = builtins.readFile ./dotfiles/i3;
+  xdg.configFile."rofi/config.rasi".text = builtins.readFile ./dotfiles/rofi;
+  xdg.configFile."devtty/config".text = builtins.readFile ./dotfiles/devtty;
+  xdg.configFile."nvim/init.lua".text = builtins.readFile ./dotfiles/nvim-init;
+  xdg.configFile."alacritty/alacritty.yml".text = builtins.readFile ./dotfiles/alacritty;
 
   #---------------------------------------------------------------------
   # Programs
@@ -69,7 +71,7 @@ let sources = import ../../nix/sources.nix; in {
 
   programs.kitty = {
     enable = true;
-    extraConfig = builtins.readFile ./kitty;
+    extraConfig = builtins.readFile ./dotfiles/kitty;
   };
 
   programs.gpg.enable = true;
@@ -78,7 +80,7 @@ let sources = import ../../nix/sources.nix; in {
     enable = true;
     shellOptions = [];
     historyControl = [ "ignoredups" "ignorespace" ];
-    initExtra = builtins.readFile ./bashrc;
+    initExtra = builtins.readFile ./dotfiles/bashrc;
 
     shellAliases = {
       ga = "git add";
@@ -131,7 +133,7 @@ let sources = import ../../nix/sources.nix; in {
     maxCacheTtl = 31536000;
   };
 
-  xresources.extraConfig = builtins.readFile ./Xresources;
+  xresources.extraConfig = builtins.readFile ./dotfiles/Xresources;
 
   # Make cursor not tiny on HiDPI screens
   home.pointerCursor = {
@@ -150,11 +152,11 @@ let sources = import ../../nix/sources.nix; in {
   programs.zsh = {
     enable = true;
     
-    initExtra = builtins.readFile ./zshrc;
+    initExtra = builtins.readFile ./dotfiles/zshrc;
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "thefuck" "kubectl" "kube-ps1" ];
+      plugins = [ "git" "kubectl" "kube-ps1" ];
       theme = "refined";
     };
 
@@ -168,6 +170,7 @@ let sources = import ../../nix/sources.nix; in {
       gp = "git push";
       gs = "git status";
       gt = "git tag";
+
       k = "kubectl";
       kgp = "kubectl get pods";
       kgd = "kubectl get deployments";
