@@ -41,6 +41,8 @@ kc() {
 # Add Visual Studio Code (code)
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
+# Add some misc binaries
+export PATH="$PATH:$HOME/.local/bin"
 
 # Installer issue link: https://github.com/NixOS/nix/issues/5406
 # Nix

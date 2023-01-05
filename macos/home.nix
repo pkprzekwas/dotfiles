@@ -13,7 +13,12 @@ let
     url = "https://github.com/nixos/nixpkgs.git";
     ref = "refs/heads/nixpkgs-22.11-darwin";
     rev = "${stable}";
-  }) { config = { allowUnfree = true; }; };
+  }) {
+    config = {
+      allowUnfree = true;
+      # allowUnsupportedSystem = true;
+    };
+  };
 
   pkgs_unstable = import (builtins.fetchGit {
     name = "nixpkgs-unstable";
@@ -69,6 +74,7 @@ in {
     alacritty
 
     rustup
+    libiconv
     gcc
   ];
 
@@ -85,8 +91,8 @@ in {
   };
 
   # TODO: move tmux config to shared directory.
-  home.file.".tmux.conf".source = ../vms/users/pprzekwa/tmux-conf;
-  home.file.".tmux.conf.local".source = ../vms/users/pprzekwa/tmux-conf-local;
+  home.file.".tmux.conf".source = ../vms/users/pprzekwa/dotfiles/tmux-conf;
+  home.file.".tmux.conf.local".source = ../vms/users/pprzekwa/dotfiles/tmux-conf-local;
 
   ### Programs
 
