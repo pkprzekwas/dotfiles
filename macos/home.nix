@@ -5,8 +5,10 @@ let
   homeDir = builtins.getEnv "HOME";
 
   # pin stable and unstable channels to specific commits
-  stable = "527bba34acb1235fed50eab49c627f14de15cc55";
-  unstable = "a2d2f70b82ada0eadbcb1df2bca32d841a3c1bf1";
+  # stable = "527bba34acb1235fed50eab49c627f14de15cc55";
+  stable = "2e6eb88c9ab70147e6087d37c833833fd4a907e5";
+  # unstable = "a2d2f70b82ada0eadbcb1df2bca32d841a3c1bf1";
+  unstable = "1d77f3b72756ca36f16440c59e6b89a957908647";
 
   pkgs = import (builtins.fetchGit {
     name = "nixpkgs-stable";
@@ -58,11 +60,17 @@ in {
     fzf # fuzzy search
     tldr # simplified man
     bottom # better sys metrics
+    bash
     wget
     tree
     jq
     gnused
     diff-so-fancy
+    watch
+    coreutils-full
+    # groff
+    ipcalc
+    jsonnet
 
     k9s
     kubectl
@@ -72,11 +80,16 @@ in {
     vault
     libiconv
     alacritty
+    terraform-ls
+    aws-iam-authenticator
+    ngrok
 
     rustup
     libiconv
     gcc
-  ];
+  ] ++ (with pkgs_unstable; [
+    terraform
+  ]);
 
   xdg.enable = true;
   xdg.configFile."nvim/init.lua".text = builtins.readFile ./dotfiles/nvim;
@@ -104,6 +117,7 @@ in {
 
   programs.tmux = {
     enable = true;
+    baseIndex = 1;
   };
 
   programs.zsh = {
