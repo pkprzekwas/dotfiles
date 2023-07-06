@@ -73,22 +73,25 @@ in {
     jsonnet
 
     k9s
-    kubectl
     kind
-    stern
 
     vault
     libiconv
     alacritty
-    terraform-ls
     aws-iam-authenticator
-    ngrok
 
     rustup
     libiconv
     gcc
+    stress
   ] ++ (with pkgs_unstable; [
+    stern
+    kubectl
+    fluxcd
+    kubernetes-helm
+    terraform-ls
     terraform
+    poetry
   ]);
 
   xdg.enable = true;
@@ -111,6 +114,7 @@ in {
 
   programs.go = {
     enable = true;
+    package = pkgs_unstable.go;
     goPath = "code/go";
     goPrivate = [ "github.com/pkprzekwas" ];
   };

@@ -9,8 +9,9 @@ PATH="$PATH:$GOPATH/bin"
 #
 
 # JavaScript
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # End JavaScript
 
 # JWT
@@ -53,6 +54,10 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 
 # Add some misc binaries
 export PATH="$PATH:$HOME/.local/bin"
+
+# Python deps mgmt
+mkdir $ZSH_CUSTOM/plugins/poetry
+poetry completions zsh > $ZSH_CUSTOM/plugins/poetry/_poetry
 
 # Installer issue link: https://github.com/NixOS/nix/issues/5406
 # Nix
